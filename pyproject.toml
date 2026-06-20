@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "autostruct"
+version = "0.1.0"
+description = "Sample-driven binary format structure inference: infer a Kaitai Struct (.ksy) draft from unknown binary samples."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "MasonZeng" }]
+keywords = ["reverse-engineering", "binary", "kaitai", "ctf", "forensics", "file-format"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Topic :: Security",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+]
+dependencies = [
+    "numpy>=1.24",
+]
+
+[project.optional-dependencies]
+# scipy speeds up autocorrelation; kaitaistruct enables the external closed-loop
+# parser; both are optional — the tool degrades gracefully without them.
+full = [
+    "scipy>=1.10",
+    "kaitaistruct>=0.10",
+]
+dev = [
+    "pytest>=7.0",
+]
+
+[project.scripts]
+autostruct = "autostruct.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
